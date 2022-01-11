@@ -1,0 +1,24 @@
+iniciar projeto com typescript
+
+Instalar ts e ts-node-dev em modo de desenvolvimento
+
+npm install typescript -D
+npm install ts-node-dev -D
+
+configurar script no packege.json para o ts-node-dev monitorar e ignorar node_modules
+"dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
+
+gerar tsconfig
+npx tsc --init -> arquivo tsconfig
+
+Editar ts config
+ex: "outDir": "./pasta da build" "rootDir": "./src"
+
+Rodar app no ambiente dev com-> npm run dev roda *sempre irá atualizar quando houver mudanças
+
+npx tsc -> gera a build
+
+node dist/server.js -> roda em produção
+
+
+
