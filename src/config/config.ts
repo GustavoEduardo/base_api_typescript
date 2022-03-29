@@ -13,9 +13,6 @@ let Config = {
     databaseDatabase:process.env.DATABASE_DATABASE,
     databaseTimeZone: process.env.DATABASE_TZ,
 
-    //tokens
-    instagramAccessToken:process.env.INSTAGRAM_ACCESS_TOKEN,
-
     //JWT
     jwtSecret:process.env.SECRET,
     jwtSalt:process.env.SALT,

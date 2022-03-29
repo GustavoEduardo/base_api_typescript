@@ -1,8 +1,9 @@
 
 import { Router } from 'express';
 import multer from 'multer';
-import uploadConfig from '../helpers/upload'
-const upload = multer(uploadConfig);
+import {fileFilter, storage} from '../helpers/upload'
+let uploadConfig = {fileFilter, storage}
+const upload: any = multer(uploadConfig);
 import {Config} from '../config/config'
 import Controller from '../api/controllers/LoginController';
 
