@@ -3,6 +3,7 @@ import 'dotenv/config';
 let Config = {
     env: process.env.NODE_ENV,
     port: process.env.PORT,
+    url: process.env.URL,
 
     //banco de dados
     databaseConnection:process.env.DATABASE_CONNECTION,
