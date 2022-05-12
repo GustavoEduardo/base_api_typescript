@@ -1,6 +1,6 @@
-import {successReturn} from '../../types/serviceDefault';
+import {ISuccessReturn} from '../../types/IServiceDefault';
 
-let SuccessReturn: successReturn = {
+let SuccessReturn: ISuccessReturn = {
     code:200,
     status:"success",
     message:"Ação Realizada com sucesso",

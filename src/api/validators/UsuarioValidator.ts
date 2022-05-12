@@ -1,6 +1,6 @@
-import ILogin from '../../types/ILogin';
+import IUsuario from '../../types/IUsuario';
 
-class LoginValidator {
+class UsuarioValidator {
 
     setError(erros: Array<any>){
         if(erros.length>0){
@@ -12,7 +12,7 @@ class LoginValidator {
         }
     }
 
-    async login(data:ILogin){
+    async create(data:IUsuario){
         let erros = []       
         if(!data.email || data.email == "" || data.email == ''){
             erros.push({name:"email",error:'Email é Obrigatório'})
@@ -21,9 +21,8 @@ class LoginValidator {
             erros.push({name:"senha",error:'Senha é Obrigatória'})
         }
         this.setError(erros)
-        return data;
     }
 
 }
 
-export default new LoginValidator();
+export default new UsuarioValidator();

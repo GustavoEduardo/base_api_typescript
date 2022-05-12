@@ -1,9 +1,9 @@
 
 import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-import 'dotenv/config';
+import { Response, NextFunction } from 'express';
+import { Config } from '../../config/config';
 export default (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction,
 ) => {
@@ -35,19 +35,16 @@ export default (
         if (!token) throw 'Token Invalido';
 
 
-        
-        jwt.verify(token, process.env.SECRET, function(err, decoded) {
-          if (err) throw 'Token Invalido';
-        
-          // se tudo estiver ok, salva no request para uso posterior
-          req.userId = decoded.login;
+        if( Config.jwtSecret){
+          jwt.verify(token, Config.jwtSecret, function(err: any, decoded: any) {
+            if (err) throw 'Token Invalido';          
+            
+            if(decoded && decoded.id_usuario) req.id_usuario = decoded.id_usuario;
+           
+          })
+        }      
 
-         
-        });
-        
-        
-
-    }catch ( e) {
+    }catch (e: any) {
         retorno.message = e;
         retorno.code = 200;
         retorno.status = "error";

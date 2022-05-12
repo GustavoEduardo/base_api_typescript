@@ -1,14 +1,22 @@
 import {  Request, Response } from 'express';
 import LoginService from '../services/LoginService';
-import ILogin from '../../types/ILogin';
+import ErrorReturn from '../../helpers/serviceDefault/errorReturn';
+import SuccessReturn from '../../helpers/serviceDefault/successReturn';
 
 class LoginController{
 
     async login(req:Request,res:Response){
-        let login = req.body;
-        let retorno = await LoginService.login(login);
+        try {
+            let data = req.body;
+            SuccessReturn.result = await LoginService.login(data);
     
-        return res.status(retorno.code).json(retorno);
+            return res.status(SuccessReturn.code).json(SuccessReturn.result);
+
+        }catch ( e: any ) {
+            ErrorReturn.message = e.message;
+            ErrorReturn.result = e.erros;
+            return ErrorReturn;
+        }
     }
 
 }
