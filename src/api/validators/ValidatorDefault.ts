@@ -26,7 +26,7 @@ class ValidatorDefault {
         return dtBd
     }
 
-    async dataFuturaNao(data: any){  
+    async dataFutura(data: any){  
         var dataAtual = moment().format('YYYY-MM-DD HH:mm:ss');
         data = moment(data).format('YYYY-MM-DD HH:mm:ss');
         if(dataAtual < data){
@@ -34,28 +34,28 @@ class ValidatorDefault {
         }
     }
 
-    async cpf(cpf: string){
-        // var Soma;
-        // var Resto;
-        // Soma = 0;
-    //   if (cpf == "00000000000") return false;
+    async cpfValido(cpf: string){
+        var Soma;
+        var Resto;
+        Soma = 0;
+      if (cpf == "00000000000") return false;
     
-    //   for (let i=1; i<=9; i++) Soma = Soma + parseInt(cpf.substring(i-1, i)) * (11 - i);
-    //   Resto = (Soma * 10) % 11;
+      for (let i=1; i<=9; i++) Soma = Soma + parseInt(cpf.substring(i-1, i)) * (11 - i);
+      Resto = (Soma * 10) % 11;
     
-    //     if ((Resto == 10) || (Resto == 11))  Resto = 0;
-    //     if (Resto != parseInt(cpf.substring(9, 10)) ) return false;
+        if ((Resto == 10) || (Resto == 11))  Resto = 0;
+        if (Resto != parseInt(cpf.substring(9, 10)) ) return false;
     
-    //   Soma = 0;
-    //     for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(cpf.substring(i-1, i)) * (12 - i);
-    //     Resto = (Soma * 10) % 11;
+      Soma = 0;
+        for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(cpf.substring(i-1, i)) * (12 - i);
+        Resto = (Soma * 10) % 11;
     
-    //     if ((Resto == 10) || (Resto == 11))  Resto = 0;
-    //     if (Resto != parseInt(cpf.substring(10, 11) ) ) return false;
+        if ((Resto == 10) || (Resto == 11))  Resto = 0;
+        if (Resto != parseInt(cpf.substring(10, 11) ) ) return false;
         return true;
     }
 
-    async email(email:string) {
+    async emailValido(email:string) {
         if(email.indexOf('@')== -1 || email.indexOf('.')== -1 ){
 	        return false        
         }

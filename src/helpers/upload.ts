@@ -1,6 +1,7 @@
 import multer from 'multer';
 import path from 'path';
     var pasta = ""
+    
     let fileFilter= (req: any, file: any, cb: any) => { 
         pasta = req.query.pasta  
         if (req.query.tipo == "imagem" && (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg")) {

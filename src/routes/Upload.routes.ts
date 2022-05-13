@@ -10,7 +10,11 @@ const routes = Router();
 
 routes.post('/upload', upload.single('file'), (req, res) => {
     const originalFileName = req.file?req.file.originalname:"semnome";
-    return res.json({location: '/uploads/'+req.query.pasta+'/'+originalFileName, url: Config.url+'/uploads/'+req.query.pasta+'/'+originalFileName, file:originalFileName});
+    return res.json({
+        location: '/uploads/'+req.query.pasta+'/'+originalFileName,
+        url: Config.url+'/uploads/'+req.query.pasta+'/'+originalFileName,
+        file:originalFileName
+    });
 });
 
 
