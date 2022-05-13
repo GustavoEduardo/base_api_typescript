@@ -25,7 +25,7 @@ class UsuarioService {
 
     async select(filtros: any){
 
-        let retorno = await UsuarioRepositories.get("admin");
+        let retorno = await UsuarioRepositories.get("admin",filtros);
         
         return retorno        
 
@@ -39,7 +39,27 @@ class UsuarioService {
         
         return retorno        
 
-    } 
+    }
+
+    async delete(id_admin: any){
+
+        //validator
+
+        let retorno = await UsuarioRepositories.delete("admin",{id_admin});
+        
+        return retorno        
+
+    }
+
+    async getById(id_admin: any){
+
+        //validator
+
+        let retorno = await UsuarioRepositories.get("admin",{id_admin});
+        
+        return retorno        
+
+    }
 
 }
 

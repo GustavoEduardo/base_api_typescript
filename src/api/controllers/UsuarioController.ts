@@ -49,6 +49,34 @@ class UsuarioController{
         }
     }
 
+    async delete(req:Request,res:Response){
+        try {
+            let id = Number(req.params.id)
+            SuccessReturn.result = await UsuarioService.delete(id);
+    
+            return res.status(SuccessReturn.code).json(SuccessReturn);
+
+        }catch ( e: any ) {
+            ErrorReturn.message = e.message;
+            ErrorReturn.result = e.erros;
+            return ErrorReturn;
+        }
+    }
+
+    async getById(req:Request,res:Response){
+        try {
+            let id = Number(req.params.id)
+            SuccessReturn.result = await UsuarioService.getById(id);
+    
+            return res.status(SuccessReturn.code).json(SuccessReturn);
+
+        }catch ( e: any ) {
+            ErrorReturn.message = e.message;
+            ErrorReturn.result = e.erros;
+            return ErrorReturn;
+        }
+    }
+
 }
 
 export default new UsuarioController();

@@ -94,4 +94,29 @@ export default class BaseRepositories{
 
         return retorno;
     }
+
+    async delete(tabela: string,condicao: any) {
+        
+        let query = Connect.table(tabela).delete();
+
+        if(condicao && Object.values(condicao).length > 0){            
+            condicao = Object.entries(condicao)
+            try {
+                for(let c of condicao){
+                    await this.validaColuna(tabela,String([c[0]]))                  
+                    let filtro = {[c[0]]: c[1]}
+                    query.where(filtro)                               
+                }                
+            }catch ( e: any ) {                
+                return e.message;
+            }    
+        }else{
+            throw {message:"Informe a condição"}
+        }
+
+        let retorno = await query
+
+        return retorno;
+        
+    }
 }

@@ -3,6 +3,7 @@ import LoginRepositories from '../repositories/LoginRepositories';
 import LoginValidator from '../validators/LoginValidator';
 import { Config } from '../../config/config';
 import jwt from 'jsonwebtoken';
+import BaseRepositories from '../repositories/BaseRepositories';
 
 
 class LoginService {
@@ -11,8 +12,10 @@ class LoginService {
         
         await LoginValidator.login(data);
 
-        let usuario: any = await LoginRepositories.login(data);
-        
+        //let usuario: any = await LoginRepositories.login(data);
+        let br = new BaseRepositories()
+        let usuario: any = await br.get("admin",{data})
+   
         if(usuario){
             var dados: any = {id: usuario[0].id_usuario}
         }

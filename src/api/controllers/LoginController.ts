@@ -10,7 +10,7 @@ class LoginController{
             let data = req.body;
             SuccessReturn.result = await LoginService.login(data);
     
-            return res.status(SuccessReturn.code).json(SuccessReturn.result);
+            return res.status(SuccessReturn.code).json(SuccessReturn);
 
         }catch ( e: any ) {
             ErrorReturn.message = e.message;
