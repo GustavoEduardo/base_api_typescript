@@ -17,7 +17,10 @@ class UsuarioService {
         data.senha = bcryptjs.hashSync(data.senha, salt),
         data.status = "ativo"
         
-        let retorno = await UsuarioRepositories.insert("admin",data);
+        let retorno = await UsuarioRepositories.insert({
+            tabela: "admin",
+            data
+        });
         
         return retorno        
 
@@ -25,8 +28,12 @@ class UsuarioService {
 
     async select(filtros: any){
 
-        let retorno = await UsuarioRepositories.get("admin",filtros);
-        
+        let retorno = await UsuarioRepositories.get({
+            tabela: "admin",
+            filtros
+        })
+
+
         return retorno        
 
     }
@@ -35,7 +42,11 @@ class UsuarioService {
 
         //validator
 
-        let retorno = await UsuarioRepositories.update("admin",data,{id_admin});
+        let retorno = await UsuarioRepositories.update({
+            tabela:"admin",
+            condicao: {id_admin},
+            data
+        });
         
         return retorno        
 
@@ -45,7 +56,10 @@ class UsuarioService {
 
         //validator
 
-        let retorno = await UsuarioRepositories.delete("admin",{id_admin});
+        let retorno = await UsuarioRepositories.delete({
+            tabela: "admin",
+            condicao: {id_admin}
+        });
         
         return retorno        
 
@@ -55,7 +69,12 @@ class UsuarioService {
 
         //validator
 
-        let retorno = await UsuarioRepositories.get("admin",{id_admin});
+        let retorno = await UsuarioRepositories.get({
+            // raw: `id_admin = '${id_admin}'`,
+            tabela: "admin",
+            filtros: {id_admin}
+
+        });
         
         return retorno        
 

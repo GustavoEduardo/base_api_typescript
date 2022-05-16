@@ -1,18 +1,21 @@
 import moment from 'moment';
+import { IDelete, IGet, IInsert, IUpdate } from '../../types/repositories/IBaseCrud';
 import {Connect} from './Connection';
-
 
 export default class BaseRepositories{
 
     async validaColuna(tabela: string,coluna: string) {
         let infoColumns = await Connect.table(tabela).columnInfo()
-        console.log(infoColumns.hasOwnProperty(coluna)+" --- "+coluna)
+        
         if(!infoColumns.hasOwnProperty(String(coluna))){
             throw {message: coluna +" não é um filtro válido"}
         }     
     }
 
-    async insert(tabela: string, data: any){
+    async insert({
+        tabela = "",
+        data = {}
+    }:IInsert){
 
         data.criado = moment().format("YYYY-MM-DD HH-mm-ss")
         data.modificado = moment().format("YYYY-MM-DD HH-mm-ss")
@@ -22,7 +25,12 @@ export default class BaseRepositories{
         return retorno[0];   
     }
 
-    async get(tabela: string, filtros?: any,campos='*', raw?: string){
+    async get({
+        tabela = "",
+        filtros = {},
+        campos = "*",
+        raw = ""
+    }:IGet){
         let tipo_ordem = "asc"
        
         let query = Connect.table(tabela).select(campos);
@@ -66,7 +74,12 @@ export default class BaseRepositories{
         
     }
 
-    async update(tabela: string,data: any, condicao: any,raw?: string){      
+    async update({
+        tabela = "",
+        data={},
+        condicao = {},
+        raw = ""
+    }:IUpdate){   
         
         data.modificado = moment().format("YYYY-MM-DD HH-mm-ss")
         let query = Connect.table(tabela).update(data);
@@ -95,7 +108,10 @@ export default class BaseRepositories{
         return retorno;
     }
 
-    async delete(tabela: string,condicao: any) {
+    async delete({
+        tabela= "",
+        condicao ={}
+    }:IDelete) {
         
         let query = Connect.table(tabela).delete();
 

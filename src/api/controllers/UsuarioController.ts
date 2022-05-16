@@ -9,28 +9,41 @@ class UsuarioController{
         try {
 
             let data = req.body;
-            SuccessReturn.result = await UsuarioService.create(data);
+            let result = await UsuarioService.create(data);            
     
-            return res.status(SuccessReturn.code).json(SuccessReturn);
+            let retorno: any = SuccessReturn({
+                result,
+                message: "Usuário criado com sucesso"
+            })
+            
+            res.status(retorno.code).json(retorno);
 
-        }catch ( e: any ) {
-            ErrorReturn.message = e.message;
-            ErrorReturn.result = e.erros;
-            return ErrorReturn;
+        }catch ( e: any ) {            
+            let retorno: any = ErrorReturn({
+                message: e.message,
+                result: e.erros
+            })
+            return res.status(retorno.code).json(retorno);
         }
     }
 
     async select(req:Request,res:Response){
         try {
             let filtros = req.query
-            SuccessReturn.result = await UsuarioService.select(filtros);
-    
-            return res.status(SuccessReturn.code).json(SuccessReturn);
+            let result = await UsuarioService.select(filtros);
+
+            let retorno: any = SuccessReturn({result})
+
+            return res.status(retorno.code).json(retorno);
 
         }catch ( e: any ) {
-            ErrorReturn.message = e.message;
-            ErrorReturn.result = e.erros;
-            return ErrorReturn;
+            
+            let retorno: any = ErrorReturn({
+                message: e.message,
+                result: e.erros
+            })
+
+            return res.status(retorno.code).json(retorno);
         }
     }
 
@@ -38,42 +51,54 @@ class UsuarioController{
         try {
             let id = Number(req.params.id)
             let data = req.body
-            SuccessReturn.result = await UsuarioService.update(data,id);
-    
-            return res.status(SuccessReturn.code).json(SuccessReturn);
+            let result = await UsuarioService.update(data,id);    
+            
+            let retorno: any = SuccessReturn({result})
 
-        }catch ( e: any ) {
-            ErrorReturn.message = e.message;
-            ErrorReturn.result = e.erros;
-            return ErrorReturn;
+            return res.status(retorno.code).json(retorno);
+
+        }catch ( e: any ) {            
+            let retorno: any = ErrorReturn({
+                message: e.message,
+                result: e.erros
+            })
+            return res.status(retorno.code).json(retorno);
         }
     }
 
     async delete(req:Request,res:Response){
         try {
             let id = Number(req.params.id)
-            SuccessReturn.result = await UsuarioService.delete(id);
-    
-            return res.status(SuccessReturn.code).json(SuccessReturn);
+            let result = await UsuarioService.delete(id);    
+            
+            let retorno: any = SuccessReturn({result})
 
-        }catch ( e: any ) {
-            ErrorReturn.message = e.message;
-            ErrorReturn.result = e.erros;
-            return ErrorReturn;
+            return res.status(retorno.code).json(retorno);
+
+        }catch ( e: any ) {            
+            let retorno: any = ErrorReturn({
+                message: e.message,
+                result: e.erros
+            })
+            return res.status(retorno.code).json(retorno);
         }
     }
 
     async getById(req:Request,res:Response){
         try {
             let id = Number(req.params.id)
-            SuccessReturn.result = await UsuarioService.getById(id);
-    
-            return res.status(SuccessReturn.code).json(SuccessReturn);
+            let result = await UsuarioService.getById(id);    
+            
+            let retorno: any = SuccessReturn({result})
 
-        }catch ( e: any ) {
-            ErrorReturn.message = e.message;
-            ErrorReturn.result = e.erros;
-            return ErrorReturn;
+            return res.status(retorno.code).json(retorno);
+
+        }catch ( e: any ) {            
+            let retorno: any = ErrorReturn({
+                message: e.message,
+                result: e.erros
+            })
+            return res.status(retorno.code).json(retorno);
         }
     }
 

@@ -1,8 +1,21 @@
 import {IErrorReturn} from '../../types/IServiceDefault';
-let ErrorReturn: IErrorReturn = {
-    code:401,
-    status:"error",
-    message:"Ocorreu um erro."
-};
+
+function ErrorReturn({
+    code= 400,
+    status = "error",
+    message = "Ocorreu um erro",
+    result = []
+}: IErrorReturn) {
+
+    let errorReturn: IErrorReturn = {
+        code,
+        status,
+        message,
+        result
+    };
+
+    return errorReturn
+    
+}
 
 export default ErrorReturn;

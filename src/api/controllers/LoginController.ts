@@ -8,14 +8,20 @@ class LoginController{
     async login(req:Request,res:Response){
         try {
             let data = req.body;
-            SuccessReturn.result = await LoginService.login(data);
+            let result = await LoginService.login(data);
     
-            return res.status(SuccessReturn.code).json(SuccessReturn);
+            let retorno: any = SuccessReturn({result})
+
+            return res.status(retorno.code).json(retorno);
 
         }catch ( e: any ) {
-            ErrorReturn.message = e.message;
-            ErrorReturn.result = e.erros;
-            return ErrorReturn;
+            
+            let retorno: any = ErrorReturn({
+                message: e.message,
+                result: e.erros
+            })
+
+            return res.status(retorno.code).json(retorno);
         }
     }
 
