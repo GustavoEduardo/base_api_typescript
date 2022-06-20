@@ -3,6 +3,11 @@ import { IDelete, IGet, IInsert, IUpdate } from '../../types/repositories/IBaseC
 import {Connect} from './Connection';
 
 export default class BaseRepositories{
+    tabela: any;
+
+    constructor(tabela: string){
+        this.tabela = tabela
+    }
 
     async validaColuna(tabela: string,coluna: string) {
         let infoColumns = await Connect.table(tabela).columnInfo()
@@ -13,36 +18,37 @@ export default class BaseRepositories{
     }
 
     async insert({
-        tabela = "",
         data = {}
     }:IInsert){
 
         data.criado = moment().format("YYYY-MM-DD HH-mm-ss")
         data.modificado = moment().format("YYYY-MM-DD HH-mm-ss")
       
-        let retorno = await Connect.table(tabela).insert(data);
+        let retorno = await Connect.table(this.tabela).insert(data);
         
         return retorno[0];   
     }
 
     async get({
-        tabela = "",
         filtros = {},
         campos = "*",
         raw = ""
     }:IGet){
         let tipo_ordem = "asc"
-       
-        let query = Connect.table(tabela).select(campos);
-
+        let query = Connect.table(this.tabela).select(campos);
+        
         if(filtros && Object.values(filtros).length > 0){
             
             if(filtros.ordem){
+                await this.validaColuna(this.tabela,filtros.ordem)
                 var ordem = filtros.ordem
                 delete filtros.ordem
             }
 
             if(filtros.tipo_ordem){
+                if(filtros.tipo_ordem != "asc" && filtros.tipo_ordem != "desc"){
+                    throw {message:"O tipo da ordenação deve ser desc ou asc"}
+                }
                 tipo_ordem = filtros.tipo_ordem
                 delete filtros.tipo_ordem
             }
@@ -50,7 +56,7 @@ export default class BaseRepositories{
             filtros = Object.entries(filtros)
             try {
                 for(let f of filtros){
-                    await this.validaColuna(tabela,String([f[0]]))                  
+                    await this.validaColuna(this.tabela,String([f[0]]))                  
                     let filtro = {[f[0]]: f[1]}
                     query.where(filtro)                               
                 }                
@@ -69,26 +75,24 @@ export default class BaseRepositories{
         }
 
         let retorno = await query
-
         return retorno;
         
     }
 
     async update({
-        tabela = "",
         data={},
         condicao = {},
         raw = ""
-    }:IUpdate){   
+    }:IUpdate){
         
         data.modificado = moment().format("YYYY-MM-DD HH-mm-ss")
-        let query = Connect.table(tabela).update(data);
+        let query = Connect.table(this.tabela).update(data);
 
         if(condicao && Object.values(condicao).length > 0){            
             condicao = Object.entries(condicao)
             try {
                 for(let c of condicao){
-                    await this.validaColuna(tabela,String([c[0]]))                  
+                    await this.validaColuna(this.tabela,String([c[0]]))                  
                     let filtro = {[c[0]]: c[1]}
                     query.where(filtro)                               
                 }                
@@ -109,17 +113,16 @@ export default class BaseRepositories{
     }
 
     async delete({
-        tabela= "",
         condicao ={}
     }:IDelete) {
         
-        let query = Connect.table(tabela).delete();
+        let query = Connect.table(this.tabela).delete();
 
         if(condicao && Object.values(condicao).length > 0){            
             condicao = Object.entries(condicao)
             try {
                 for(let c of condicao){
-                    await this.validaColuna(tabela,String([c[0]]))                  
+                    await this.validaColuna(this.tabela,String([c[0]]))                  
                     let filtro = {[c[0]]: c[1]}
                     query.where(filtro)                               
                 }                

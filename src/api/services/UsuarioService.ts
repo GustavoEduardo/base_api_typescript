@@ -18,7 +18,6 @@ class UsuarioService {
         data.status = "ativo"
         
         let retorno = await UsuarioRepositories.insert({
-            tabela: "admin",
             data
         });
         
@@ -29,7 +28,6 @@ class UsuarioService {
     async select(filtros: any){
 
         let retorno = await UsuarioRepositories.get({
-            tabela: "admin",
             filtros
         })
 
@@ -43,7 +41,6 @@ class UsuarioService {
         //validator
 
         let retorno = await UsuarioRepositories.update({
-            tabela:"admin",
             condicao: {id_admin},
             data
         });
@@ -57,7 +54,6 @@ class UsuarioService {
         //validator
 
         let retorno = await UsuarioRepositories.delete({
-            tabela: "admin",
             condicao: {id_admin}
         });
         
@@ -71,7 +67,6 @@ class UsuarioService {
 
         let retorno = await UsuarioRepositories.get({
             // raw: `id_admin = '${id_admin}'`,
-            tabela: "admin",
             filtros: {id_admin}
 
         });
