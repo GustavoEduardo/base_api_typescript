@@ -2,6 +2,7 @@ export interface IGet {
     filtros?:any|object
     campos?:string
     raw?:string
+    rawType?: string
 }
 
 export interface IInsert {
