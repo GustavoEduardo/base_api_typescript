@@ -1,13 +1,20 @@
-import { Router } from 'express';
-import Upload from './Upload.routes'
-import LoginRoutes from './Login.routes';
-import UsuarioRoutes from './Usuario.routes';
+import { Router } from "express";
+import { Request, Response } from "express";
+import LoginRoutes from "./Login.routes";
+import auth from "../api/middlewares/auth";
 
 const routes = Router();
 
-routes.use(Upload);
+routes.get("/", async (req: Request, res: Response) => {
+  res.status(200).json({ status: "true" });
+  return
+});
+
+routes.get("/teste-auth", auth, async (req: Request, res: Response) => {
+  res.status(200).json({ status: "true" });
+  return 
+});
+
 routes.use(LoginRoutes);
-routes.use(UsuarioRoutes);
 
 export default routes;
-

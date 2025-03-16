@@ -1,9 +1,8 @@
-import INovaSenha from "../../types/INovaSenha"
 import EmailService from "./EmailService"
 
 export default {    
   
-    async recuperarSenha(data: INovaSenha){
+    async recuperarSenha(data: any){
 
         const mail = new EmailService()
         const template = mail.template("recuperarSenha.html", data.replaces)

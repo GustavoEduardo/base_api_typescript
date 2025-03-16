@@ -8,11 +8,10 @@ export default (
   next: NextFunction,
 ) => {
     
-    let retorno  = {
+    let retorno = {
         status:"success",
         message:"Ação realizada com sucesso",
-        code: 200,
-        data: {}
+        code: 200
     };
     
     try {
@@ -30,26 +29,28 @@ export default (
 
         //validar schema do authorization "Bearer"
         const [scheme, token] = parts;
-        if( !/^Bearer$/i.test(scheme) ) throw 'token invalido'
+        if( !/^Bearer$/i.test(scheme) ) throw 'Sessão expirada'
 
-        if (!token) throw 'Token Invalido';
+        if (!token) throw 'Sessão expirada';
 
 
-        if( Config.jwtSecret){
-          jwt.verify(token, Config.jwtSecret, function(err: any, decoded: any) {
-            if (err) throw 'Token Invalido';          
-            
-            if(decoded && decoded.id_usuario) req.id_usuario = decoded.id_usuario;
+         if( Config.jwtSecret){
+           jwt.verify(token, Config.jwtSecret, function(err: any, decoded: any) {
+             if (err) throw 'Sessão expirada';          
+          
+             if(decoded && decoded.id_usuario) req.id_usuario = decoded.id_usuario;
            
-          })
-        }      
+           })
+         }      
 
-    }catch (e: any) {
+    } catch (e: any) {
         retorno.message = e;
-        retorno.code = 200;
+        retorno.code = 401;
         retorno.status = "error";
 
-        return res.status(200).json(retorno);
+        res.status(401).json(retorno);
+        return;
     }
-    return next();
+    next();
+    return;
 };

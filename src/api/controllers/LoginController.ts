@@ -1,30 +1,32 @@
-import {  Request, Response } from 'express';
-import LoginService from '../services/LoginService';
-import ErrorReturn from '../../helpers/serviceDefault/errorReturn';
-import SuccessReturn from '../../helpers/serviceDefault/successReturn';
+import { Request, Response } from "express";
+import LoginService from "../services/LoginService";
+import { IErrorReturn, ISuccessReturn } from "../../types/IReturnDefault";
+import { Login } from "../../types/ILogin";
+import { z } from "zod";
+import { validateInput } from "../../helpers/helpers";
 
-class LoginController{
+class LoginController {
+  async login(req: Request, res: Response): Promise<any> {
+    try {
+      let data: z.infer<typeof Login> = req.body;
 
-    async login(req:Request,res:Response){
-        try {
-            let data = req.body;
-            let result = await LoginService.login(data);
-    
-            let retorno: any = SuccessReturn({result})
+      validateInput(data, Login);
 
-            return res.status(retorno.code).json(retorno);
+      let result = await LoginService.login(data);
 
-        }catch ( e: any ) {
-            
-            let retorno: any = ErrorReturn({
-                message: e.message,
-                result: e.erros
-            })
+      let retorno: ISuccessReturn = { result };
 
-            return res.status(retorno.code).json(retorno);
-        }
+      return res.status(200).json(retorno);
+
+    } catch (e: any) {
+      let retorno: IErrorReturn = {
+        message: e.message,
+        result: e.error,
+      };
+
+      return res.status(400).json(retorno);
     }
-
+  }
 }
 
 export default new LoginController();

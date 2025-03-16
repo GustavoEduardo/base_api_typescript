@@ -20,7 +20,7 @@ export interface IEmailService {
 }
 
 
-//Para cada email
+// Para cada email
 export interface INovocontato {    
     to:any
     replaces: {

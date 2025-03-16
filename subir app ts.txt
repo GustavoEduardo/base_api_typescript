@@ -1,9 +1,18 @@
+npm init
+
+----------------------------------
+
 iniciar projeto com typescript
 
 Instalar ts e ts-node-dev em modo de desenvolvimento
 
-npm install typescript -D
+npm i -D typescript @types/node
 npm install ts-node-dev -D
+
+Instalar dependências do package.json
+npm i
+npm install dotenv --save-dev
+npm install mysql2 --save
 
 configurar script no packege.json para o ts-node-dev monitorar e ignorar node_modules
 "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
@@ -12,13 +21,17 @@ gerar tsconfig
 npx tsc --init -> arquivo tsconfig
 
 Editar ts config
-ex: "outDir": "./pasta da build" "rootDir": "./src"
+"outDir": "./build" 
+"rootDir": "./src"
 
 Rodar app no ambiente dev com-> npm run dev roda *sempre irá atualizar quando houver mudanças
 
 npx tsc -> gera a build
 
 node dist/server.js -> roda em produção
+
+npm rum dev -> modo de desenvolvimento
+npm rum test -> rodar testes
 
 
 

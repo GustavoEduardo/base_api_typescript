@@ -1,5 +1,6 @@
-import multer from 'multer';
-import path from 'path';
+// import multer from 'multer';
+// import path from 'path';
+
     var pasta = ""
     
     let fileFilter= (req: any, file: any, cb: any) => { 
@@ -17,25 +18,28 @@ import path from 'path';
             return cb(new Error(`Apenas formatos de ${req.query.tipo} são aceitos`));
         }
     }
-    let storage: any= multer.diskStorage({
-        destination:path.resolve(__dirname,'..','..',`static/uploads/${pasta}`),
-        // destination: (req: any, file: any, cb: any) => {
-        //     cb(null, "static/uploads/"+req.pasta);
-        // },
-        filename: (req: any, file: any, cb: any) => {
-            const ext = path.extname(file.originalname);
-            const name = path.basename(file.originalname,ext);
 
-            if(req.query.nome){
-                var fileName = `${req.query.nome}${ext}`;
-            }else{
-                var fileName = `${Date.now()}${ext}`;
-            }
+    let storage: any= {};
+    
+    // let storage: any= multer.diskStorage({
+    //     destination:path.resolve(__dirname,'..','..',`static/uploads/${pasta}`),
+    //     // destination: (req: any, file: any, cb: any) => {
+    //     //     cb(null, "static/uploads/"+req.pasta);
+    //     // },
+    //     filename: (req: any, file: any, cb: any) => {
+    //         const ext = path.extname(file.originalname);
+    //         const name = path.basename(file.originalname,ext);
+
+    //         if(req.query.nome){
+    //             var fileName = `${req.query.nome}${ext}`;
+    //         }else{
+    //             var fileName = `${Date.now()}${ext}`;
+    //         }
             
-            file.originalname = fileName;
+    //         file.originalname = fileName;
 
-            cb(null,fileName)
-        }
-    })
+    //         cb(null,fileName)
+    //     }
+    // })
 
 export {fileFilter, storage}
